@@ -3,8 +3,8 @@ package hello
 import org.apache.spark.SparkContext._
 import org.apache.spark.SparkConf
 import org.apache.spark.mllib.recommendation._
-import org.apache.spark.rdd.{ PairRDDFunctions, RDD }
 import org.apache.spark.SparkContext
+import org.apache.spark.rdd.{PairRDDFunctions,RDD}
 import scala.collection.mutable.HashMap
 import java.util.List
 import java.util.ArrayList
@@ -13,9 +13,9 @@ import scopt.OptionParser
 //import com.ml.util.HbaseUtil
 
 /**
-* moivelens 电影推荐
-*
-*/
+ * moivelens 电影推荐
+ *
+ */
 object MoiveRecommender {
 
   val numRecommender = 10
@@ -85,7 +85,7 @@ object MoiveRecommender {
 
     //本地运行模式，读取本地的spark主目录
     var conf = new SparkConf().setAppName("oceanmap")
-//      .setSparkHome("/home/ocean/app/spark-1.3.1-bin-hadoop2.6")
+    //      .setSparkHome("/home/ocean/app/spark-1.3.1-bin-hadoop2.6")
     conf.setMaster("local[*]")
 
     //集群运行模式，读取spark集群的环境变量
@@ -98,7 +98,7 @@ object MoiveRecommender {
 
     /**
      * *MovieLens ratings are on a scale of 1-5:
-     * 5: Must see
+     * 5: Must se
      * 4: Will enjoy
      * 3: It's okay
      * 2: Fairly bad
@@ -192,9 +192,9 @@ object MoiveRecommender {
         recommenders.add(put)
       }
     })
-   print(recommenders)
+    print(recommenders)
     //保存到到HBase的[recommender]表中
     //recommenders是返回的java的ArrayList，可以自己用Java或者Scala写HBase的操作工具类，这里我就不给出具体的代码了，应该可以很快的写出
-//    HbaseUtil.saveListMap("recommender", recommenders)
+    //    HbaseUtil.saveListMap("recommender", recommenders)
   }
 }

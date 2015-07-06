@@ -26,9 +26,12 @@ import org.apache.spark._
  * Logistic regression based classification.
  */
 object SparkLR {
-  val N = 10000  // Number of data points
-  val D = 10   // Numer of dimensions
-  val R = 0.7  // Scaling factor
+  val N = 10000
+  // Number of data points
+  val D = 10
+  // Numer of dimensions
+  val R = 0.7
+  // Scaling factor
   val ITERATIONS = 5
   val rand = new Random(42)
 
@@ -36,22 +39,22 @@ object SparkLR {
 
   def generateData = {
     def generatePoint(i: Int) = {
-      val y = if(i % 2 == 0) -1 else 1
-      val x = Vector(D, _ => rand.nextGaussian + y * R)
+      val y = if (i % 2 == 0) -1 else 1
+      val x = Vector(D, _ => rand.nextGaussian() + y * R)
       DataPoint(x, y)
     }
     Array.tabulate(N)(generatePoint)
   }
 
   def main(args: Array[String]) {
-    if (args.length == 0) {
-      System.err.println("Usage: SparkLR <master> [<slices>]")
-      System.exit(1)
-    }
+    //    if (args.length == 0) {
+    //      System.err.println("Usage: SparkLR <master> [<slices>]")
+    //      System.exit(1)
+    //    }
     //本地运行模式，读取本地的spark主目录
     var conf = new SparkConf().setAppName("oceanmap")
     //      .setSparkHome("/home/ocean/app/spark-1.3.1-bin-hadoop2.6")
-        conf.setMaster("local[*]")
+    conf.setMaster("local[*]")
 
     //集群运行模式，读取spark集群的环境变量
     //var conf = new SparkConf().setAppName("Moive Recommendation")

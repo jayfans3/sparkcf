@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package hello
+package io
 
 import org.apache.commons.math3.linear._
 
@@ -28,9 +28,12 @@ import org.apache.commons.math3.linear._
 object LocalALS {
 
   // Parameters set through command line arguments
-  var M = 0 // Number of movies
-  var U = 0 // Number of users
-  var F = 0 // Number of features
+  var M = 0
+  // Number of movies
+  var U = 0
+  // Number of users
+  var F = 0
+  // Number of features
   var ITERATIONS = 0
   val LAMBDA = 0.01 // Regularization coefficient
 
@@ -54,7 +57,7 @@ object LocalALS {
     math.sqrt(sumSqs / (M.toDouble * U.toDouble))
   }
 
-  def updateMovie(i: Int, m: RealVector, us: Array[RealVector], R: RealMatrix) : RealVector = {
+  def updateMovie(i: Int, m: RealVector, us: Array[RealVector], R: RealMatrix): RealVector = {
     var XtX: RealMatrix = new Array2DRowRealMatrix(F, F)
     var Xty: RealVector = new ArrayRealVector(F)
     // For each user that rated the movie
@@ -73,7 +76,7 @@ object LocalALS {
     new CholeskyDecomposition(XtX).getSolver.solve(Xty)
   }
 
-  def updateUser(j: Int, u: RealVector, ms: Array[RealVector], R: RealMatrix) : RealVector = {
+  def updateUser(j: Int, u: RealVector, ms: Array[RealVector], R: RealMatrix): RealVector = {
     var XtX: RealMatrix = new Array2DRowRealMatrix(F, F)
     var Xty: RealVector = new ArrayRealVector(F)
     // For each movie that the user rated

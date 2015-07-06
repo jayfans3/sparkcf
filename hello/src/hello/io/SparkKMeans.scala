@@ -15,18 +15,19 @@
  * limitations under the License.
  */
 
-package hello
+package io
 
 import java.util.Random
 
-import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.util.Vector
+import org.apache.spark.{SparkConf, SparkContext}
 
 /**
  * K-means clustering.
  */
 object SparkKMeans {
-  val R = 1000     // Scaling factor
+  val R = 1000
+  // Scaling factor
   val rand = new Random(42)
 
   def parseVector(line: String): Vector = {
@@ -72,12 +73,12 @@ object SparkKMeans {
     val kPoints = data.takeSample(withReplacement = false, K, 42).toArray
     var tempDist = 1.0
 
-    while(tempDist > convergeDist) {
-      val closest = data.map (p => (closestPoint(p, kPoints), (p, 1)))
+    while (tempDist > convergeDist) {
+      val closest = data.map(p => (closestPoint(p, kPoints), (p, 1)))
 
-      val pointStats = closest.reduceByKey{case ((x1, y1), (x2, y2)) => (x1 + x2, y1 + y2)}
+      val pointStats = closest.reduceByKey { case ((x1, y1), (x2, y2)) => (x1 + x2, y1 + y2)}
 
-      val newPoints = pointStats.map {pair => (pair._1, pair._2._1 / pair._2._2)}.collectAsMap()
+      val newPoints = pointStats.map { pair => (pair._1, pair._2._1 / pair._2._2)}.collectAsMap()
 
       tempDist = 0.0
       for (i <- 0 until K) {
